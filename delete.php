@@ -5,5 +5,5 @@ $id = $_GET['id'];
 $query = "DELETE FROM note WHERE id='$id'";
 mysqli_query($connect, $query);
  
-header("location:index.php?pesan=hapus");
+header("location:dashboard.php?pesan=hapus");
 ?>

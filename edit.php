@@ -1,56 +1,6 @@
 <?php
-
-// include 'connection.php';
- 
-// mengaktifkan session
-// session_start();
- 
-// // cek apakah user telah login, jika belum login maka di alihkan ke halaman login
-// if($_SESSION['status'] !="login"){
-//  header("location:index.php");
-// }
- 
-// // menampilkan pesan selamat datang
-// echo "Hai, selamat datang ". $_SESSION['username'];
- 
-// ?>
-<!-- // <br/>
-// <br/>
-// <a href="logout.php">LOGOUT</a> -->
-
-
- <?php 
-// session_start();
-// session_destroy();
-// header("location:../index.php");
-// ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>SB Admin 2 - Tables</title>
-
-    <!-- Custom fonts for this template -->
-    <link href="http://localhost/JKTrans_Gana/asset/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-
-    <!-- Custom styles for this template-->
-    <link href="http://localhost/JKTrans_Gana/asset/css/sb-admin-2.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this page -->
-    <link href="http://localhost/JKTrans_Gana/asset/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
-</head>
+include "header.php";
+?>
 
 <body id="page-top">
 
@@ -294,157 +244,77 @@
                 </nav>
                 <!-- End of Topbar -->
 
-                <!-- Begin Page Content -->
+
+
                 <div class="container-fluid">
+<div class="card shadow mb-4 col-11 mx-auto">
+<div class="row">
 
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                    <div class="button mt-3 mb-3">
-                    <a href="addNote.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm "> Tambah Data</a>
-                    </div>
-
-                    <?php
-
-                        if(isset($_GET['pesan'])){
-                            $pesan = $_GET['pesan'];
-                            if($pesan == "input"){
-                                echo "<div class='alert alert-success' role='alert'>
-                                Data berhasil ditambahkan
-                              </div>";
-                            }else if($pesan == "update"){
-                                echo "<div class='alert alert-success' role='alert'>
-                                Data berhasil diubah
-                              </div>";
-                            }else if($pesan == "hapus"){
-                                echo "<div class='alert alert-danger' role='alert'>
-                                Data berhasil dihapus
-                              </div>";
-                            }
-                        }
-
-                    ?>
-                    
-
-        
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">JKTrans</h6>
+                        <div class="card-header col-12 bg-white my-1">
+                            <h3 class="mb-0 d-inline text-primary">Form Tambah Data Nota</h3>
+                            <a href="tables.php" type="submit" class="btn float-right btn-sm btn-danger" style="width:33px; font-weight:bold;">X</a>
                         </div>
+
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>S.P</th>
-                                            <th>Colli</th>
-                                            <th>Berat</th>
-                                            <th>Franco</th>
-                                            <th>Confrankert</th>
-                                            <th>Penerima</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php
-                                        include "connection.php";
-                                        $query = "SELECT * FROM note";
-                                        $row = mysqli_query($connect, $query);
-                                        $no = 1;
-                                        while($data = mysqli_fetch_array($row)){
-                                        ?>
 
-                                        <tr>
-                                        <td> <?= $no++; ?></td>
-                                        <td> <?= $data['sp']; ?></td>
-                                        <td> <?= $data['colli']; ?></td>
-                                        <td> <?= $data['berat']; ?></td>
-                                        <td> <?php $fr = $data['franco']; 
-                                            if ($fr == 1 ){
-                                                echo "Lunas";
-                                            }else{
-                                                echo "Belum lunas";
-                                            }
-                                        ?></td>
-                                        <td> <?= $data['confrankert']; ?></td>
-                                        <td> <?= $data['penerima']; ?></td>
-                                        <td> <?= $data['status']; ?></td>
-                                        <td>
-                                        <a class="edit" href="edit.php?id=<?=$data['id'];?>">Edit</a> |
-                                        <a class="hapus" href="delete.php?id=<?= $data['id']; ?>">Hapus</a> 
-                                        </td>
-                                        </tr>
-                                        <?php
+                        <?php
+                            include "connection.php";
+                            $id = $_GET["id"];
+                            $query = "SELECT * FROM note WHERE id='$id' ";
+                            $row = mysqli_query($connect, $query);
+                            $no = 1;
+                            while($data = mysqli_fetch_array($row))
+                            {
+                               
+                        ?>
 
-                                        } ?>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>S.P</th>
-                                            <th>Colli</th>
-                                            <th>Berat</th>
-                                            <th>Franco</th>
-                                            <th>Confrankert</th>
-                                            <th>Penerima</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </tfoot>
-                                   
-                                </table>
+                        <form method="post" action="update.php">
+                        <input type="hidden" name="id" value="<?=  $data['id']; ?>">
+                            <div class="form-group">
+                                <label class="text-dark" for="sp">S. P.</label>
+                                <input class="form-control" type="text" name="sp" value="<?= $data['sp'];  ?>" id="sp">
                             </div>
-                        </div>
+                            <div class="form-group">
+                                <label class="text-dark" for="colli">Colli</label>
+                                <input class="form-control" type="text" name="colli" value="<?= $data['colli'];  ?>" id="colli">
+                            </div>
+                            <div class="form-group">
+                                <label class="text-dark" for="berat">Berat</label>
+                                <input class="form-control" type="text" name="berat" value="<?= $data['berat'];  ?>" id="berat">
+                            </div>
+                            <div class="form-group">
+                                <label class="text-dark" for="franco">franco</label>
+                                <select class="form-control" type="text" name="franco" value="<?= $data['franco'];  ?>" id="franco">
+                                <?php
+
+                                ?>
+                                    <option value="1" <?= ($data['franco'] == 0 ) ? 'selected' : '' ?>>Lunas</option>
+                                    <option value="0" <?= ($data['franco'] == 0 ) ? 'selected' : '' ?>>Belum Lunas</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="text-dark" for="confrankert">Confrankert</label>
+                                <input class="form-control" type="number" name="confrankert" value="<?= $data['confrankert'];  ?>" id="confrankert">
+                            </div>
+                            <div class="form-group">
+                                <label class="text-dark" for="penerima">Penerima</label>
+                                <input class="form-control" type="text" name="penerima" value="<?= $data['penerima'];  ?>" id="penerima">
+                            </div>
+                            <div class="form-group">
+                                <label class="text-dark" for="status">Status</label>
+                                <input class="form-control" type="text" name="status" value="<?= $data['status'];  ?>" id="status">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary col-lg-12">Tambah Data!</button>
+                        </form>
+                        <?php
+                            }
+                        ?>
                     </div>
-
-                </div>
-                <!-- /.container-fluid -->
-
-            </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
-
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
                 </div>
             </div>
         </div>
-    </div>
 
-<?php
+        <?php
 include "footer.php";
 ?>
