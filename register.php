@@ -1,37 +1,4 @@
-<?php
 
-require_once("connection.php");
-
-if(isset($_POST['register'])){
-
-    // filter data yang diinputkan
-    $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
-    $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
-    // enkripsi password
-    $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
-
-
-    // menyiapkan query
-    $sql = "INSERT INTO user (email, username, password) 
-            VALUES (:email, :username, :password)";
-    $stmt = $db->prepare($sql);
-
-    // bind parameter ke query
-    $params = array(
-        ":email" => $email,
-        ":username" => $username,
-        ":password" => $password,
-    );
-
-    // eksekusi query untuk menyimpan ke database
-    $saved = $stmt->execute($params);
-
-    // jika query simpan berhasil, maka user sudah terdaftar
-    // maka alihkan ke halaman login
-    if($saved) header("Location: login.php");
-}
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -44,16 +11,19 @@ if(isset($_POST['register'])){
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Register</title>
+    <title>SB Admin 2 - Tables</title>
 
-    <!-- Custom fonts for this template-->
-    <link href="http://localhost/jktrans/asset/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <!-- Custom fonts for this template -->
+    <link href="http://localhost/JKTrans_Gana/asset/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="http://localhost/jktrans/asset/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="http://localhost/JKTrans_Gana/asset/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="http://localhost/JKTrans_Gana/asset/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 </head>
 
@@ -61,52 +31,55 @@ if(isset($_POST['register'])){
 
     <div class="container">
 
-        <div class="card o-hidden border-0 shadow-lg my-5">
-            <div class="card-body p-0">
-                <!-- Nested Row within Card Body -->
-                <div class="row">
-                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
-                    <div class="col-lg-7">
-                        <div class="p-5">
-                            <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+        <!-- Outer Row -->
+        <div class="row justify-content-center ">
+
+            <div class="col-xl-10 col-lg-12 col-md-9 align-middle">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                        <p></p>
+                                    </div>
+                                    <form class="user" action="action-register.php" method="POST">
+                                        <div class="form-group">
+                                            <input type="email" name="email" class="form-control form-control-user"
+                                                id="exampleInputEmail" aria-describedby="emailHelp"
+                                                placeholder="Email">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" name="username" class="form-control form-control-user"
+                                                id="exampleInputEmail" aria-describedby="emailHelp"
+                                                placeholder="Username">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control form-control-user"
+                                                id="exampleInputPassword" name="password" placeholder="Password">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">
+                                            Login
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
-                            <form class="user">
-                                <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                                    placeholder="Email Address">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" name="username" class="form-control form-control-user" id="exampleInput"
-                                        placeholder="Username">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" name="password" class="form-control form-control-user" id="exampleInput"
-                                        placeholder="password">
-                                </div>
-                                <input type="submit" name="register" class="btn btn-primary btn-user btn-block">
-                                    Register Account
-                                </input>
-                                <hr>
-                            </form>
+                        </div>
                     </div>
                 </div>
+
             </div>
+
         </div>
 
     </div>
 
-   <!-- Bootstrap core JavaScript-->
-   <script src="http://localhost/jktrans/asset/vendor/jquery/jquery.min.js"></script>
-    <script src="http://localhost/jktrans/asset/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<?php
+include('footer.php');
+?>
 
-    <!-- Core plugin JavaScript-->
-    <script src="http://localhost/jktrans/asset/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="http://localhost/jktrans/asset/js/sb-admin-2.min.js"></script>
-
-
-</body>
-
-</html>
+ 
